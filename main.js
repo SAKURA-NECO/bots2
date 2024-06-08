@@ -1,0 +1,85 @@
+const {alCrientId} = require('./al/config.json');
+const hFnc = require("./al/func.js")
+const {mikaCrinetId} = require('./mika/config.json')
+const mFnc = require("./mika/func.js")
+
+require('dotenv').config();
+const server = require('./server.js'); 
+const path = require('path')
+const fs = require("fs")
+
+server.keepServer();
+
+const {
+  REST,
+  Routes,
+  Client,
+  Collection,
+  GatewayIntentBits,
+} = require("discord.js");
+
+const al = new Client({
+  intents: [
+    GatewayIntentBits.MessageContent,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.GuildMembers,
+    GatewayIntentBits.Guilds,
+  ]
+});//intents設定
+const mika = new Client({
+  intents: [
+    GatewayIntentBits.MessageContent,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.GuildMembers,
+    GatewayIntentBits.Guilds,
+  ]
+});//intents設定
+
+if (
+    alCrientId == undefined) {
+  console.error("ALClientIDが設定されていません。");
+  process.exit(0);
+}//clientId照合
+if (
+  mikaCrinetId == undefined) {
+console.error("MIKAClientIDが設定されていません。");
+process.exit(0);
+}//clientId照合
+
+if (
+    process.env['AL_TOKEN'] == undefined) {
+    console.error("AL_TOKENが設定されていません。");
+    process.exit(0);
+  }//アルtoken照合
+if (
+    process.env['MIKA_TOKEN']== undefined) {
+    console.error("MIKA_TOKENが設定されていません。");
+    process.exit(0);
+    }//ミカtoken照合
+
+console.log("起動準備中...")
+
+al.on("ready", () => {
+
+  hFnc.register(al,alCrientId,Collection,REST,Routes,path,fs)
+  
+ 
+  
+
+});//readyevent
+
+al.login(process.env['AL_TOKEN']);//ログイン
+
+mika.on("ready", () => {
+
+  mFnc.register(mika,mikaCrinetId,Collection,REST,Routes,path,fs)
+  
+  
+  
+
+});//readyevent
+
+mika.login(process.env['MIKA_TOKEN']);//ログイン
+
+function readyLog() { console.log("―――起動完了―――") }
+  setTimeout(readyLog, 2500)
