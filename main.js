@@ -162,7 +162,7 @@ function readyLog() { console.log("―――起動完了―――") }
     const content = interaction.fields.getTextInputValue('contents');
   
     console.log(senduser.options);
-          al.users.cache.get(senduser).send(content)
+          mika.users.cache.get(senduser).send(content)
           await interaction.reply({content:"メッセージを送信しました！",ephemeral: true})
     interaction.channel.send(`送信内容:${content}`);
   
@@ -180,7 +180,7 @@ function readyLog() { console.log("―――起動完了―――") }
     )
     .setColor(`#f89475`);
   
-    const channels = al.channels.cache.get('1247750543179386921');
+    const channels = mika.channels.cache.get('1247750543179386921');
     channels.send({embeds: [Embed] });
   }
   });
