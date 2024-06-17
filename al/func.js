@@ -40,6 +40,36 @@ function register(al,alCrientId,Collection,REST,Routes,path,fs) {
     }
     }
 
+function checkTime(client) {
+    const japanTime = new Date().toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' });
+    const japanDate = new Date(japanTime);
+    const hours = japanDate.getHours();
+    const minutes = japanDate.getMinutes();
+    const nowtime = `${hours}:${String(minutes).padStart(2, '0')}`;
+    const jsonData = JSON.parse(fs.readFileSync('data/morning.json', 'utf-8'));
+
+    
+    for (const guildId in jsonData) {
+        if (jsonData.hasOwnProperty(guildId)) {
+            if (jsonData[guildId].time === nowtime) {
+                bump (client,guildId)
+            }
+        }
+    }
+    return null;
+}
+  function morning (client,guildId){
+    const jsonData = JSON.parse(fs.readFileSync('data/bumpData.json', 'utf-8'));
+    const cid = jsonData[guildId].cid
+    const oid = jsonData[guildId].oid
+    const channel = client.channels.cache.get(cid);
+    const owner = client.users.cache.get(oid);
+    channel.send(`...`);
+  
+  }
+
     module.exports = {
-        register
+        register,
+        morning,
+        checkTime,
     }
