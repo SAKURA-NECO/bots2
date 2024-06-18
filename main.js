@@ -74,6 +74,9 @@ console.log("起動準備中...")
 al.on("ready", () => {
 
   hFnc.register(al,alCrientId,Collection,REST,Routes,path,fs)
+  setInterval(()=>{
+    hFnc.checkTime(al);
+  },1000*60)
   
  
   
