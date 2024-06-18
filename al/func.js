@@ -59,12 +59,12 @@ function checkTime(client) {
     return null;
 }
   function morning (client,guildId){
-    const jsonData = JSON.parse(fs.readFileSync('data/bumpData.json', 'utf-8'));
+    const jsonData = JSON.parse(fs.readFileSync('./data/bumpData.json', 'utf-8'));
     const cid = jsonData[guildId].cid
     const oid = jsonData[guildId].oid
     const channel = client.channels.cache.get(cid);
     const owner = client.users.cache.get(oid);
-    channel.send(`...`);
+    channel.send(`ハルカ！起きてちょうだい！クライアントからの依頼受けに行くわよ！`);
   
   }
 
