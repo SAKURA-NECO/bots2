@@ -46,7 +46,7 @@ function checkTime(client) {
     const hours = japanDate.getHours();
     const minutes = japanDate.getMinutes();
     const nowtime = `${hours}:${String(minutes).padStart(2, '0')}`;
-    const jsonData = JSON.parse(fs.readFileSync('data/morning.json', 'utf-8'));
+    const jsonData = JSON.parse(fs.readFileSync('./data/morning.json', 'utf-8'));
 
     
     for (const guildId in jsonData) {
@@ -59,7 +59,7 @@ function checkTime(client) {
     return null;
 }
   function morning (client,guildId){
-    const jsonData = JSON.parse(fs.readFileSync('./data/bumpData.json', 'utf-8'));
+    const jsonData = JSON.parse(fs.readFileSync('./data/morningData.json', 'utf-8'));
     const cid = jsonData[guildId].cid
     const oid = jsonData[guildId].oid
     const user = client.users.cache.get(oid);
