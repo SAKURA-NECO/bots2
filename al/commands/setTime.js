@@ -22,12 +22,12 @@ module.exports = {
 
         try {
             // メッセージに返信して通知する
-            await interaction.channel.send('わかったわ。その時間に起こしに行くわね！');
+            await interaction.reply('わかったわ。その時間に起こしに行くわね！');
 
             // ファイルから既存のデータを読み込む
             let datas = {};
             try {
-                const data = await fsPromises.readFile(`./data/morningData.json`, 'utf8');
+                const data = await fsPromises.readFile(`../data/morningData.json`, 'utf8');
                 datas = JSON.parse(data);
             } catch (error) {
                 // ファイルが存在しない場合や読み込みエラーが発生した場合に備えて、空のオブジェクトを使用します
@@ -35,13 +35,13 @@ module.exports = {
             }
 
             // 新しいデータを既存のデータに追加
-            datas[interaction.author.name] = {
+            datas[interaction.author.displayName] = {
                 "uid": `${interaction.author.id}`,
                 "time": `${time}`
             };
 
             // 更新されたデータをファイルに書き込む
-            await fsPromises.writeFile(`./data/morningData.json`, JSON.stringify(datas, null, 2));
+            await fsPromises.writeFile(`../data/morningData.json`, JSON.stringify(datas, null, 2));
         } catch (error) {
             console.error('Error processing /bump:', error);
         }
