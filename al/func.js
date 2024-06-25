@@ -1,6 +1,7 @@
 const { promises: fsPromises, ...fs } = require('fs');
+const path = require('path');
 
-function register(al, alClientId, Collection, REST, Routes, path) {
+function register(al, alClientId, Collection, REST, Routes) {
     al.commands = new Collection();
 
     const commandsPath = path.join(__dirname, 'commands');
@@ -8,7 +9,7 @@ function register(al, alClientId, Collection, REST, Routes, path) {
     const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('js'));
 
     for (const file of commandFiles) {
-        const command = require(`./commands/${file}`);
+        const command = require(path.join(commandsPath, file));
         commands.push(command.data.toJSON());
     }
 
@@ -48,7 +49,8 @@ async function checkTime(client) {
         const minutes = japanDate.getMinutes();
         const nowtime = `${hours}:${String(minutes).padStart(2, '0')}`;
 
-        const data = await fsPromises.readFile('./data/morningData.json', 'utf-8');
+        const jsonFilePath = path.join(__dirname, 'data', 'morningData.json');
+        const data = await fsPromises.readFile(jsonFilePath, 'utf-8');
         const jsonData = JSON.parse(data);
 
         for (const guildId in jsonData) {
@@ -64,7 +66,8 @@ async function checkTime(client) {
 
 async function morning(client, guildId) {
     try {
-        const data = await fsPromises.readFile('./data/morningData.json', 'utf-8');
+        const jsonFilePath = path.join(__dirname, 'data', 'morningData.json');
+        const data = await fsPromises.readFile(jsonFilePath, 'utf-8');
         const jsonData = JSON.parse(data);
         const cid = jsonData[guildId].cid;
         const oid = jsonData[guildId].oid;
