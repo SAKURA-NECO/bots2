@@ -52,7 +52,7 @@ function checkTime(client) {
     for (const guildId in jsonData) {
         if (jsonData.hasOwnProperty(guildId)) {
             if (jsonData[guildId].time === nowtime) {
-                bump (client,guildId)
+                morning (client,guildId)
             }
         }
     }
