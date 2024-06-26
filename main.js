@@ -1,5 +1,5 @@
 const {alCrientId} = require('./al/config.json');
-const hFnc = require("./al/func.js")
+const aFnc = require("./al/func.js")
 const {mikaCrinetId} = require('./mika/config.json')
 const mFnc = require("./mika/func.js")
 
@@ -73,9 +73,9 @@ console.log("起動準備中...")
 
 al.on("ready", () => {
 
-  hFnc.register(al,alCrientId,Collection,REST,Routes,path,fs)
+  aFnc.register(al,alCrientId,Collection,REST,Routes,path,fs)
   setInterval(()=>{
-    hFnc.checkTime(al);
+    aFnc.checkTime(al);
   },1000*60)
   
  
